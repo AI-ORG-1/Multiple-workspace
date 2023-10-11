@@ -1,4 +1,4 @@
-language: <your_language>
+language: python
 
 matrix:
   include:
@@ -13,19 +13,20 @@ before_script:
   - mkdir -p $HOME/workspaces/$WORKSPACE
 
 script:
-  - # Your build/test commands here
-  - # Save artifacts or data to the workspace
+  - hello_world.py
+  - echo "Saving artifacts to workspace $WORKSPACE"
   - cp some_artifact $HOME/workspaces/$WORKSPACE/
 
 after_script:
-  - # You can use the workspace in the after_script phase as well
+  - echo "Using workspace in after_script for $WORKSPACE"
+  - ls $HOME/workspaces/$WORKSPACE
 
 jobs:
   include:
     - stage: Deploy
       script:
         - echo "Deploying from workspace $WORKSPACE"
-        - # Your deployment commands here
+        - python3 /opt/hello_world.py
 
 cache:
   directories:
@@ -33,7 +34,7 @@ cache:
 
 branches:
   only:
-    - master
+    - main
 
 # Customize other Travis CI settings as needed
 
