@@ -1,26 +1,39 @@
+language: <your_language>
+
+matrix:
+  include:
+    - name: Workspace A
+      env: WORKSPACE=workspaceA
+
+    - name: Workspace B
+      env: WORKSPACE=workspaceB
+
+before_script:
+  - echo "Setting up workspace $WORKSPACE"
+  - mkdir -p $HOME/workspaces/$WORKSPACE
+
 script:
-  - ./build $TRAVIS_OS_NAME
+  - # Your build/test commands here
+  - # Save artifacts or data to the workspace
+  - cp some_artifact $HOME/workspaces/$WORKSPACE/
+
+after_script:
+  - # You can use the workspace in the after_script phase as well
+
 jobs:
   include:
-    - stage: Build binaries
-      os: linux
-      workspaces:
-        create:
-          name: linux-binaries
-    - os: osx
-      workspaces:
-        create:
-          name: osx-binaries
     - stage: Deploy
-      language: minimal
-      workspaces:
-        use:
-          - linux-binaries
-          - osx-binaries
-      git:
-        clone: false
       script:
-        - ./create_archive.sh
-      deploy:
-        provider: script
-        script: ./upload.sh
+        - echo "Deploying from workspace $WORKSPACE"
+        - # Your deployment commands here
+
+cache:
+  directories:
+    - $HOME/workspaces # Cache the workspace data
+
+branches:
+  only:
+    - master
+
+# Customize other Travis CI settings as needed
+
