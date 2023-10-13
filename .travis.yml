@@ -1,40 +1,33 @@
-language: python
-
-matrix:
-  include:
-    - name: Workspace A
-      env: WORKSPACE=workspaceA
-
-    - name: Workspace B
-      env: WORKSPACE=workspaceB
-
-before_script:
-  - echo "Setting up workspace $WORKSPACE"
-  - mkdir -p $HOME/workspaces/$WORKSPACE
-
-script:
-  - hello_world.py
-  - echo "Saving artifacts to workspace $WORKSPACE"
-  - cp some_artifact $HOME/workspaces/$WORKSPACE/
-
-after_script:
-  - echo "Using workspace in after_script for $WORKSPACE"
-  - ls $HOME/workspaces/$WORKSPACE
 
 jobs:
   include:
-    - stage: Deploy
+    - stage: warm_cache
       script:
-        - echo "Deploying from workspace $WORKSPACE"
-        - python3 /opt/hello_world.py
-
-cache:
-  directories:
-    - $HOME/workspaces # Cache the workspace data
-
-branches:
-  only:
-    - main
-
-# Customize other Travis CI settings as needed
-
+        - echo "foo" > foo.txt
+      workspaces:
+        create:
+          name: ws1
+          paths:
+            - foo.txt
+    - stage: warm_cache
+      script:
+        - echo "goo" > goo.txt
+      workspaces:
+        create:
+          name: ws2
+          paths:
+            - goo.txt
+    - stage: warm_cache
+      script:
+        - echo "toooo" > too.txt
+      workspaces:
+        create:
+          name: ws3
+          paths:
+            - goo.txt
+    - stage: use_cache
+      workspaces:
+        use: ws2
+      script:
+        - cat foo.txt || true
+  
