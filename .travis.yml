@@ -9,17 +9,11 @@ jobs:
           name: ws1
           paths:
             - foo.txt
-    - stage: warm_cache
-      script:
-        - echo "goo" > goo.txt
       workspaces:
         create:
           name: ws2
           paths:
             - goo.txt
-    - stage: warm_cache
-      script:
-        - echo "toooo" > too.txt
       workspaces:
         create:
           name: ws3
