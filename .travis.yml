@@ -23,5 +23,5 @@ jobs:
       workspaces:
         use: ws2
       script:
-        - cat foo.txt || true
+        - cat goo.txt || true
   
