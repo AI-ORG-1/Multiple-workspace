@@ -21,7 +21,10 @@ jobs:
             - goo.txt
     - stage: use_cache
       workspaces:
-        use: ws2
+        use: 
+          - ws1
+          - ws2
+          - ws3
       script:
         - cat goo.txt || true
   
