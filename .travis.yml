@@ -7,18 +7,10 @@ jobs:
       workspaces:
         create:
           name: ws1
-          paths:
-            - foo.txt
-      workspaces:
-        create:
           name: ws2
-          paths:
-            - goo.txt
-      workspaces:
-        create:
           name: ws3
           paths:
-            - goo.txt
+            - foo.txt
     - stage: use_cache
       workspaces:
         use: 
