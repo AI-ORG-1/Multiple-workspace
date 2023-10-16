@@ -6,40 +6,50 @@ jobs:
       script:
         - echo "Building Job A"
         - echo "Running tests for Job A"
+        - mkdir -p workspace-a
+        - echo "This is data from Job A" > workspace-a/data-A.txt
       workspaces:
         create:
           name: workspace-a
           paths:
-            - path/to/artifacts-A
+            - workspace-a
 
     - name: "Job B"
       script:
         - echo "Building Job B"
         - echo "Running tests for Job B"
+        - mkdir -p workspace-b
+        - echo "This is data from Job B" > workspace-b/data-B.txt
       workspaces:
         create:
           name: workspace-b
           paths:
-            - path/to/artifacts-B
+            - workspace-b
 
     - name: "Job C"
       script:
         - echo "Building Job C"
         - echo "Running tests for Job C"
+        - mkdir -p workspace-c
+        - echo "This is data from Job C" > workspace-c/data-C.txt
       workspaces:
         create:
           name: workspace-c
           paths:
-            - path/to/artifacts-C
+            - workspace-c
 
     - stage: Deploy
       name: "Deploy"
       script:
         - echo "Deploying using artifacts from Job A and Job B"
+        - cat workspace-a/data-A.txt
+        - cat workspace-b/data-B.txt
+        - cat workspace-c/data-C.txt
       workspaces:
         use:
           - workspace-a
           - workspace-b
+          - workspace-c
 
 
   
