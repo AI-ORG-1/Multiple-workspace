@@ -6,9 +6,9 @@ jobs:
         - echo "foo" > foo.txt
       workspaces:
         create:
-          name: ws1
-          name: ws2
-          name: ws3
+            - ws1
+            - ws2
+            - ws3
           paths:
             - foo.txt
     - stage: use_cache
