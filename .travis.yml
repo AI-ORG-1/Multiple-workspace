@@ -6,17 +6,18 @@ jobs:
         - echo "foo" > foo.txt
       workspaces:
         create:
-            - ws1
-            - ws2
-            - ws3
-          paths:
-            - foo.txt
+          - ws1
+          - ws2
+          - ws3
+      path:
+        - foo.txt
     - stage: use_cache
       workspaces:
-        use: 
+        use:
           - ws1
           - ws2
           - ws3
       script:
         - cat goo.txt || true
+
   
