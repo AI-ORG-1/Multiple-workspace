@@ -41,7 +41,7 @@ jobs:
     - stage: Deploy
       name: "Deploy"
       script:
-        - echo "Deploying using artifacts from Job A and Job B"
+        - echo "Deploying using artifacts from Job A Job B and Job C"
         - cat workspace-a/data-A.txt
         - cat workspace-b/data-B.txt
         - cat workspace-c/data-C.txt
